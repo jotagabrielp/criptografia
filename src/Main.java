@@ -4,24 +4,18 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        // Recebe a frase e a chave criptográfica
-        System.out.print("Digite a frase: ");
-        String frase = scanner.nextLine();
-        System.out.print("Digite a chave criptográfica (um número inteiro): ");
-        int chave = scanner.nextInt();
+        System.out.print("Digite a frase a ser criptografada: ");
+        String frase = sc.nextLine();
+        System.out.print("Digite a chave de criptografia: ");
+        int chave = sc.nextInt();
 
-        // Cria a tabela hash com o mapeamento das letras
         Map<Character, Character> tabelaHash = criarTabelaHash(chave);
 
-        // Criptografa a frase
         String fraseCriptografada = criptografar(frase, tabelaHash);
 
-        // Imprime a frase criptografada
         System.out.println("Frase criptografada: " + fraseCriptografada);
-
-        scanner.close();
     }
 
     public static Map<Character, Character> criarTabelaHash(int chave) {
@@ -29,7 +23,7 @@ public class Main {
         char primeiro = ' ';
         char ultimo = '~';
 
-        for (char caractere = ' '; caractere <= '~'; caractere++) {
+        for (char caractere = primeiro; caractere <= ultimo; caractere++) {
             char caractereCriptografado = (char) ((caractere - primeiro + chave) % (ultimo - primeiro + 1) + primeiro);
             tabelaHash.put(caractere, caractereCriptografado);
         }
@@ -41,7 +35,7 @@ public class Main {
         StringBuilder fraseCriptografada = new StringBuilder();
 
         for (char caractere : frase.toCharArray()) {
-            char caractereCriptografado = tabelaHash.getOrDefault(caractere, caractere);
+            char caractereCriptografado = tabelaHash.get(caractere);
             fraseCriptografada.append(caractereCriptografado);
         }
 
